@@ -1,8 +1,8 @@
 # FieldOps architecture
 
-## Purpose
+## Overview
 
-FieldOps is an internal work-order platform intended to demonstrate the structure of a real multi-user business application rather than a single-user CRUD demo.
+FieldOps manages customers, users, sessions, work orders, and audit records in PostgreSQL. Next.js route handlers provide the API used by the React interface.
 
 ## Request flow
 
@@ -19,46 +19,45 @@ flowchart LR
 
 ## Authentication
 
-Credentials are verified with bcrypt password hashes. Successful login creates a cryptographically random opaque session token. Only a SHA-256 hash of the token is stored in PostgreSQL; the raw token is sent in an HTTP-only, SameSite=Lax cookie. Sessions expire after seven days.
+Credentials are checked against bcrypt password hashes. A successful login creates a random session token.
 
-This is intentionally server-managed session authentication rather than a client-stored JWT.
+Only a SHA-256 hash of that token is stored in PostgreSQL. The raw token is sent in an HTTP-only, SameSite=Lax cookie. Sessions expire after seven days.
+
+Sessions are managed server-side, so they can be invalidated without relying on client-stored claims.
 
 ## Authorization
 
 Three roles exist:
 
-- **ADMIN** — full operational access.
-- **DISPATCHER** — create customers/work orders, assign technicians, manage queue state, view audit activity.
-- **TECHNICIAN** — can only view assigned work and update its status.
+- **ADMIN** — full operational access
+- **DISPATCHER** — can create customers and work orders, assign technicians, manage queue state, and view audit activity
+- **TECHNICIAN** — can view assigned work and update its status
 
-Route handlers enforce these boundaries server-side. The UI hiding a control is not treated as authorization.
+Route handlers check these permissions before reading or changing protected data.
 
-## Domain rules
+## Work-order rules
 
-Work-order state transitions are centralized in `src/domain/work-order.ts`. Terminal states cannot be reopened through the normal workflow.
+Status transitions are defined in `src/domain/work-order.ts`.
 
-Assigning an unassigned open work order automatically moves it to `ASSIGNED`. Removing the assignee from an assigned order returns it to `OPEN`.
+Assigning a technician to an open work order moves it to `ASSIGNED`. Removing the assignee from an assigned work order returns it to `OPEN`. Completed and cancelled work orders are terminal states.
 
 ## Persistence
 
-Prisma maps users, sessions, customers, work orders, and audit entries to PostgreSQL. Foreign keys and indexes support common queue and history lookups.
+Prisma maps users, sessions, customers, work orders, and audit entries to PostgreSQL. Foreign keys and indexes support queue, ownership, and history queries.
 
-## Auditability
+## Audit log
 
-Customer creation and work-order creation/changes write audit entries with the acting user, entity, timestamp, and before/after operational state where relevant.
+Customer creation and work-order changes write an audit record with the acting user, entity, timestamp, and relevant before/after values.
 
-## Tradeoffs and production next steps
+## Current limitations
 
-This portfolio version intentionally keeps scope bounded. A production rollout would add:
+FieldOps does not currently include:
 
-- account lockout/rate limiting on authentication
-- CSRF/origin hardening for state-changing requests
-- password reset and invitation workflows
+- login rate limiting
+- password reset or user invitations
 - email/SMS notifications
-- attachment/object storage
-- pagination for large queues and audit streams
-- database migrations with a release process rather than `db push`
-- structured observability and alerting
+- file attachments
+- pagination for large queues
+- a migration/release workflow beyond Prisma `db push`
+- structured application monitoring
 - end-to-end browser tests
-
-These are documented as next steps rather than implied to already exist.
