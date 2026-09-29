@@ -1,17 +1,15 @@
 # Contributing to FieldOps
 
-FieldOps is primarily a portfolio project, but changes follow the same workflow I would use on a team.
-
 ## Development workflow
 
-1. Create a focused branch from `main`.
-2. Keep each change scoped to one concern.
-3. Add or update tests for changed domain behavior.
-4. Run the local quality gates before opening a pull request.
-5. Open a pull request that explains the problem, the approach, and any tradeoffs.
-6. Merge only after CI passes.
+1. Create a branch from `main`.
+2. Keep the change focused.
+3. Add or update tests when behavior changes.
+4. Run the local checks.
+5. Open a pull request with a short explanation of the change.
+6. Merge after CI passes.
 
-## Local quality gates
+## Local checks
 
 ```bash
 npm install
@@ -29,21 +27,20 @@ npm run db:seed
 npm run dev
 ```
 
-## Pull-request expectations
+## Pull requests
 
-A useful pull request should include:
+Include:
 
-- a concise problem statement
-- implementation notes
+- what changed
 - database/schema impact, if any
 - authorization/security impact, if any
-- tests performed
-- screenshots for user-interface changes when practical
+- tests run
+- screenshots for UI changes when useful
 
-## Engineering principles
+## Project rules
 
-- Authorization belongs on the server, not only in the UI.
-- Domain-state rules should live outside presentation code.
-- External input should be validated before persistence.
-- Operationally important changes should be auditable.
-- Changes should leave the project buildable and testable.
+- Authorization is enforced on the server.
+- Work-order status rules stay outside presentation code.
+- External input is validated before persistence.
+- Important operational changes are written to the audit log.
+- Changes should leave tests and builds passing.
