@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { workOrderPriorities, workOrderStatuses } from "@/domain/work-order";
+import { workOrderPriorities, workOrderStatuses } from "../domain/work-order";
 
 export const loginSchema = z.object({
   email: z.string().trim().email().max(200),
