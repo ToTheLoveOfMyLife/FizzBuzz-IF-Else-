@@ -1,6 +1,6 @@
 # Security notes
 
-FieldOps demonstrates several concrete security controls:
+FieldOps currently uses:
 
 - bcrypt password hashing
 - random opaque session tokens
@@ -10,10 +10,8 @@ FieldOps demonstrates several concrete security controls:
 - secure cookies in production
 - database-backed session expiration
 - server-side authorization on protected endpoints
-- technician ownership checks on work-order mutations
+- technician ownership checks
 - schema validation on external input
-- audit logging for privileged operational changes
+- audit logging for privileged changes
 
-## Scope
-
-FieldOps is a portfolio application, not a security-certified production service. The architecture document lists controls that would be required before exposing it as a real customer-facing system.
+See [SECURITY.md](../SECURITY.md) for the remaining security work required before using the application with real customer data.
