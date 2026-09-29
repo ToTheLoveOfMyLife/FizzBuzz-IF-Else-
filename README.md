@@ -1,6 +1,6 @@
 # FieldOps
 
-![CI](https://github.com/ToTheLoveOfMyLife/FizzBuzz-IF-Else-/actions/workflows/ci.yml/badge.svg)
+![CI](https://github.com/timwmcqueen/FieldOps/actions/workflows/ci.yml/badge.svg)
 
 A multi-user **work-order operations platform** built as a flagship software-engineering portfolio project.
 
