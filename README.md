@@ -1,5 +1,7 @@
 # FieldOps
 
+![CI](https://github.com/ToTheLoveOfMyLife/FizzBuzz-IF-Else-/actions/workflows/ci.yml/badge.svg)
+
 A multi-user **work-order operations platform** built as a flagship software-engineering portfolio project.
 
 FieldOps goes beyond a simple CRUD demo: it includes authentication, database-backed sessions, role-based authorization, PostgreSQL persistence, server-enforced workflow rules, audit history, automated tests, CI, and containerized deployment configuration.
@@ -135,6 +137,10 @@ A PostgreSQL database still needs to be reachable through `DATABASE_URL`.
 
 - [Architecture](docs/architecture.md)
 - [Security notes](docs/security.md)
+- [Contributing workflow](CONTRIBUTING.md)
+- [Security policy](SECURITY.md)
+- [ADR 0001 — database-backed session authentication](docs/adr/0001-session-authentication.md)
+- [ADR 0002 — API-boundary role authorization](docs/adr/0002-role-authorization.md)
 
 ## CI
 
