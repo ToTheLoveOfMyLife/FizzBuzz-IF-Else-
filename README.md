@@ -2,7 +2,7 @@
 
 ![CI](https://github.com/timwmcqueen/FieldOps/actions/workflows/ci.yml/badge.svg)
 
-A multi-user **work-order operations platform** built as a flagship software-engineering portfolio project.
+FieldOps is a work-order app I built around the kind of service work I already understand from IT support. It lets a dispatcher create jobs, assign technicians, track status, and keep a record of what changed.
 
 FieldOps goes beyond a simple CRUD demo: it includes authentication, database-backed sessions, role-based authorization, PostgreSQL persistence, server-enforced workflow rules, audit history, automated tests, CI, and containerized deployment configuration.
 
